@@ -1,8 +1,6 @@
-node("node1"){
+node("docker"){
     checkout scm
     stage("build"){
-        sh 'apt-get install -y jekyll'
-        sh 'jekyll build'
-        sh 'pwd'
+        sh 'docker build -t node-storefront:latest .'
     }
 }
