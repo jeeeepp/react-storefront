@@ -1,10 +1,10 @@
 version: '3.9'
 services:
-  node:
-    image: node:17
-    ports:
-      - "80:80"
-    command: ['sleep','infinity']
+  docker:
+    image: docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: ["sleep","infinity"]
   jenkins:
     image: jenkins/jenkins:lts
     volumes:
