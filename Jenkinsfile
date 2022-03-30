@@ -1,7 +1,7 @@
 node("node1"){
     checkout scm
     stage("build"){
-        sh 'npm install'
+        sh 'apt-get install -y jekyll'
         sh 'jekyll build'
         sh 'pwd'
     }
