@@ -1,7 +1,8 @@
-node("ruby1"){
+node("node1"){
     checkout scm
     stage("build"){
-        sh 'bundle install'
+        sh 'npm install'
         sh 'jekyll build'
+        sh 'pwd'
     }
 }
