@@ -11,6 +11,11 @@ services:
       - jenkins_home:/var/jenkins_home
     ports:
       - "8080:8080"
-      - "40000:40000"
+      - "40000:50000"
+  node:
+    build: .
+    ports: 
+      - 3000:3001
+    command: ["sleep","infinity"]
 volumes:
   jenkins_home:

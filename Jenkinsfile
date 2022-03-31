@@ -1,6 +1,13 @@
 node("docker"){
     checkout scm
-    stage("build"){
-        sh 'docker build -t node-storefront:latest .'
+    withCredentials([usernamePassword(credentialsId: 'dockerpwd', passwordVariable: 'password', usernameVariable: 'user')]) {
+    // some block
+    print (password)
+    print (user)
+        stage("login"){
+            sh 'echo $user'
+            sh 'echo $password'
+            sh 'docker build -t jeepajeep/storefront:v1 .'
+        }
     }
 }
