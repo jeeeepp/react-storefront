@@ -1,13 +1,17 @@
-node("docker"){
+node("node1"){
     checkout scm
-    withCredentials([usernamePassword(credentialsId: 'dockerpwd', passwordVariable: 'password', usernameVariable: 'user')]) {
+    stage("build"){
+        sh 'apt-get install -y jekyll'
+        sh 'jekyll build'
+        sh 'pwd'
+    }
+}
+
+node("dnd1"){
+    withDockerRegistry(credentialsId: 'dockerpwd') {
     // some block
-    print (password)
-    print (user)
-        stage("login"){
-            sh 'echo $user'
-            sh 'echo $password'
-            sh 'docker build -t jeepajeep/storefront:v1 .'
-        }
+        checkout scm
+        def newApp = docker.build "jeepajeep/storefront:${env.BUILD_NUMBER}"
+        newApp.push()
     }
 }
