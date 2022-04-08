@@ -51,7 +51,7 @@ jobs:
       run: kubectl get pod
       
     - name: test deploy
-      run: kubectl create deployments.apps store-front-action
+      run: kubectl create deployment store-front-action --image=jeepajeep/storefront:${GITHUB_REF##*/}
       
     - name: test get pod again
       run: kubectl get pod
