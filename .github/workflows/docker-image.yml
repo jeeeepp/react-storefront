@@ -47,5 +47,11 @@ jobs:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
     
-    - name: deploy
+    - name: test get pod
+      run: kubectl get pod
+      
+    - name: test deploy
+      run: kubectl create deployments.apps store-front-action
+      
+    - name: test get pod again
       run: kubectl get pod
