@@ -3,6 +3,16 @@ on:
     branches: [ main ]
     
 name: Build and deploy
+
+env:
+  PROJECT_ID: test-k8s-j1
+  GAR_LOCATION: asia-southeast1-c # TODO: update region of the Artifact Registry
+  GKE_CLUSTER: cluster-jeep-1    # TODO: update to cluster name
+  GKE_ZONE: asia-southeast1-c   # TODO: update to cluster zone
+  DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
+  REPOSITORY: jeepajeep/storefront # TODO: update to Artifact Registry docker repository
+  IMAGE: jeepajeep/storefront
+  
 jobs:
   build:
     name: build
@@ -20,4 +30,22 @@ jobs:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
     - name: push Docker image
       run: docker push jeepajeep/storefront:${GITHUB_REF##*/}
-      
+ 
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Configure Workload Identity Federation and generate an access token.
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v0.4.0'
+      with:
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+    
+    - name: Set up GKE credentials
+      uses: google-github-actions/get-gke-credentials@v0
+      with:
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_ZONE }}
+    
+    - name: deploy
+      run: kubectl get pod
