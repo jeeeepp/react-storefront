@@ -9,7 +9,6 @@ env:
   GAR_LOCATION: asia-southeast1-c # TODO: update region of the Artifact Registry
   GKE_CLUSTER: cluster-jeep-1    # TODO: update to cluster name
   GKE_ZONE: asia-southeast1-c   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
   REPOSITORY: jeepajeep/storefront # TODO: update to Artifact Registry docker repository
   IMAGE: jeepajeep/storefront
   
@@ -51,7 +50,8 @@ jobs:
       run: kubectl get pod
       
     - name: test deploy
-      run: kubectl create deployment store-front-action --image=jeepajeep/storefront:${GITHUB_REF##*/}
+      run: kubectl rollout restart deployment store-front-action
+
       
     - name: test get pod again
       run: kubectl get pod
