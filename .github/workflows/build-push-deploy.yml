@@ -50,7 +50,7 @@ jobs:
       run: kubectl get pod
       
     - name: test deploy
-      run: kubectl rollout restart deployment store-front-action
+      run: kubectl rollout restart deployment deployment-store
 
       
     - name: test get pod again
