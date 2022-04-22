@@ -14,7 +14,7 @@ podTemplate(yaml: '''
 node(POD_LABEL){
     checkout scm
     stage("build"){
-        sh 'apt-get install -y jekyll'
+        sh 'sudo apt-get install -y jekyll'
         sh 'jekyll build'
         sh 'pwd'
     }
