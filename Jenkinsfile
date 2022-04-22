@@ -8,7 +8,7 @@ podTemplate(yaml: '''
         command:
         - sleep
         args:
-        - 99d
+        - infinity
 ''') {
 
 node(POD_LABEL){
