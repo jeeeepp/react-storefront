@@ -33,15 +33,14 @@ node(POD_LABEL){
                 sh 'whoami'
                 sh 'jekyll build .'
             }
-        }
+
         container('docker'){
             stage("push"){
                 withDockerRegistry(credentialsId: 'dockerpwd') {
                     checkout scm
                     def newApp = docker.build "jeepajeep/storefront:${env.BUILD_NUMBER}"
                     newApp.push()
-                    sh 'pwd'
-                    sh 'ls -la'
+
                 } 
             }
         }
