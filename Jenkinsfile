@@ -35,11 +35,6 @@ node(POD_LABEL){
             }
         }
         container('docker'){
-            stage("build"){
-                sh 'whoami'
-                sh 'ls -la'
-            }
-
             stage("push"){
                 withDockerRegistry(credentialsId: 'dockerpwd') {
                     checkout scm
