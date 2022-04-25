@@ -40,6 +40,8 @@ node(POD_LABEL){
                     checkout scm
                     def newApp = docker.build "jeepajeep/storefront:${env.BUILD_NUMBER}"
                     newApp.push()
+                    sh 'pwd'
+                    sh 'ls -la'
                 } 
             }
         }
