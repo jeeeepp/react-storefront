@@ -23,6 +23,13 @@ podTemplate(yaml: '''
         - sleep
         args:
         - 99d
+      
+      - name: k8s
+        image: jeepajeep/storefront:k8s
+        command:
+        - sleep
+        args:
+        - 99d
 ''') {
 
 node(POD_LABEL){
@@ -42,6 +49,14 @@ node(POD_LABEL){
                     def newApp = docker.build "jeepajeep/storefront:${env.GIT_BRANCH}"
                     newApp.push()
                 } 
+            }
+        }
+
+        container('k8s'){
+            stage('deploy'){
+                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'gke-cluster', namespace: '', serverUrl: '') {
+                sh 'kubectl rollout restart deployment deployment-store'
+                }
             }
         }
     }
