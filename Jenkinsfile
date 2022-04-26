@@ -39,7 +39,7 @@ node(POD_LABEL){
             stage("push"){
                 withDockerRegistry(credentialsId: 'dockerpwd') {
                     checkout scm
-                    def newApp = docker.build "jeepajeep/storefront:${env.BRANCH_NAME}"
+                    def newApp = docker.build "jeepajeep/storefront:${env.GIT_BRANCH}"
                     newApp.push()
                 } 
             }
