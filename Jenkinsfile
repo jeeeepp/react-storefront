@@ -56,6 +56,7 @@ node(POD_LABEL){
             stage('deploy'){
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'gke-cluster', namespace: '', serverUrl: '') {
                 sh 'kubectl rollout restart deployment deployment-store'
+                sh 'echo helloworld'
                 }
             }
         }
